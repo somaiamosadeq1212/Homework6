@@ -1,5 +1,11 @@
-export default function Dashboard(){
-    return(
-        <h1>Dashboard page</h1>
-    )
-}
+// import Header from "../components/Header";
+// import SummaryCards from "../components/SummaryCards";
+
+// export default function Dashboard() {
+//   return (
+//     <div>
+//       <Header />
+//       <SummaryCards />
+//     </div>
+//   );
+// }
