@@ -36,25 +36,35 @@ export default function SummarySection({
   completedGoals,
   pendingGoals,
   onAddGoal,
+  xp,
+  streak,
 }) {
   return (
     <>
-      {/* Summary Cards (Streak + XP + Button) */}
+      {/* 🔥 Top Cards */}
       <Box sx={{ display: "flex", gap: 2, mb: 3, flexWrap: "wrap" }}>
+        
+        {/* Streak */}
         <Card sx={{ flex: 1, minWidth: 200 }}>
           <CardContent>
             <Typography>🔥 Streak</Typography>
-            <Typography variant="h5">5 days</Typography>
+            <Typography variant="h5">
+              {streak} days
+            </Typography>
           </CardContent>
         </Card>
 
+        {/* XP */}
         <Card sx={{ flex: 1, minWidth: 200 }}>
           <CardContent>
             <Typography>⭐ XP</Typography>
-            <Typography variant="h5">580</Typography>
+            <Typography variant="h5">
+              {xp} XP
+            </Typography>
           </CardContent>
         </Card>
 
+        {/* Add Goal */}
         <Card sx={{ flex: 1, minWidth: 200 }}>
           <CardContent>
             <Button variant="contained" fullWidth onClick={onAddGoal}>
@@ -64,7 +74,7 @@ export default function SummarySection({
         </Card>
       </Box>
 
-      {/* Stats Cards */}
+      {/* 📊 Stats */}
       <Box
         sx={{
           display: "grid",
