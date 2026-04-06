@@ -1,4 +1,5 @@
 import Layout from "./components/layout/Layout.jsx";
+import { SearchProvider } from "./context/SearchContext.jsx";
 import AppRouter from "./router/AppRouter.jsx";
 
 export default function App() {
@@ -7,7 +8,10 @@ export default function App() {
 
     // <Layout />
 
-    <AppRouter />
+    <SearchProvider>
+      <AppRouter />
+    </SearchProvider>
+    
 
   );
 }

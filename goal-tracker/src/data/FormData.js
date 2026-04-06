@@ -28,7 +28,7 @@ export const initialGoals = [
     endDate: "2026-03-15",
   },
   {
-    id: 3,
+    id: 4,
     title: "Read a Book",
     description: "Read 30 pages",
     progress: 100,
@@ -36,6 +36,16 @@ export const initialGoals = [
     startDate: "2026-03-09",
     endDate: "2026-03-11",
   },
+
+  {
+  id: 3,
+  title: "Test Today",
+  description: "Read 30 pages",
+  progress: 10,
+  completed: false,
+  startDate: "2026-04-04",
+  endDate: "2026-04-04",
+}
 ];
 
 // Form default values
