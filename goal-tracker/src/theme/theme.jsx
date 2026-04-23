@@ -1,7 +1,8 @@
 import { createTheme } from "@mui/material/styles";
 
-export default function getTheme(mode = "light") {
+export default function getTheme(mode = "light", direction) {
   return createTheme({
+    direction: direction,
     palette: {
       mode,
       primary: {

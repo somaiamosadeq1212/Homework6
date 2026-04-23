@@ -1,100 +1,7 @@
-
-
-// import { useState, useMemo } from "react";
-// import {
-//   Box,
-//   CssBaseline,
-//   ThemeProvider,
-//   Container,
-//   Drawer,
-//   Toolbar,
-//   useMediaQuery,
-// } from "@mui/material";
-
-// import Navbar from "./Navbar";
-// import Sidebar from "./Sidebar";
-// import getTheme from "../../theme/theme";
-// import { Outlet } from "react-router-dom";
-
-// export default function Layout() {
-//   const [mode, setMode] = useState("light");
-//   const [mobileOpen, setMobileOpen] = useState(false);
-//   const [collapsed, setCollapsed] = useState(false);
-
-//   const theme = useMemo(() => getTheme(mode), [mode]);
-//   const navbarHeight = 64;
-
-//   const toggleMode = () =>
-//     setMode((prev) => (prev === "light" ? "dark" : "light"));
-//   const handleMobileToggle = () => setMobileOpen((prev) => !prev);
-//   const handleCollapseToggle = () => setCollapsed((prev) => !prev);
-
-//   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-//   const isTabletOrDesktop = useMediaQuery(theme.breakpoints.up("sm"));
-
-//   // عرض Drawer بر اساس collapsed و موبایل
-//   const drawerWidth = isMobile ? 240 : collapsed ? 72 : 240;
-
-//   return (
-//     <ThemeProvider theme={theme}>
-//       <CssBaseline />
-
-//       <Navbar
-//         onMenuClick={handleMobileToggle}
-//         onCollapse={handleCollapseToggle}
-//         mode={mode}
-//         onToggleMode={toggleMode}
-//         collapsed={collapsed}
-//       />
-
-//       <Box sx={{ display: "flex" }}>
-//         {/* Sidebar */}
-//         <Drawer
-//           variant={isMobile ? "temporary" : "permanent"}
-//           open={isMobile ? mobileOpen : true}
-//           onClose={handleMobileToggle}
-//           ModalProps={{ keepMounted: true }}
-//           sx={{
-//             width: drawerWidth,
-//             flexShrink: 0,
-//             "& .MuiDrawer-paper": {
-//               width: drawerWidth,
-//               top: `${navbarHeight}px`,
-//               height: `calc(100vh - ${navbarHeight}px)`,
-//               overflowY: "auto",
-//               overflowX: "hidden",
-//               transition: "width 0.3s",
-//             },
-//           }}
-//         >
-//           <Sidebar collapsed={!isMobile && collapsed} />
-//         </Drawer>
-
-//         {/* Main Content */}
-//         <Box
-//           component="main"
-//           sx={{
-//             flexGrow: 1,
-//             p: 3,
-//             transition: "margin 0.3s",
-//             ml: isMobile ? 0 : `${drawerWidth}px`,
-//           }}
-//         >
-//           <Toolbar />
-//           <Container maxWidth="lg">
-//             <Outlet />
-//           </Container>
-//         </Box>
-//       </Box>
-//     </ThemeProvider>
-//   );
-// }
-
-import { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   CssBaseline,
-  ThemeProvider,
   Container,
   Drawer,
   Toolbar,
@@ -103,91 +10,150 @@ import {
 
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
-import getTheme from "../../theme/theme";
 import { Outlet } from "react-router-dom";
+import { useTheme } from "@mui/material/styles";
+import { initialGoals } from "../../data/FormData";
+import i18n from "i18next";
 
-export default function Layout() {
-  const [mode, setMode] = useState("light");
+export default function Layout({
+  mode,
+  setMode,
+  direction,
+}) {
+  const theme = useTheme();
+
   const [mobileOpen, setMobileOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
 
-  const theme = useMemo(() => getTheme(mode), [mode]);
-  const navbarHeight = 64;
+  const [search, setSearch] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("All");
 
-  const toggleMode = () =>
-    setMode((prev) => (prev === "light" ? "dark" : "light"));
-  const handleMobileToggle = () => setMobileOpen((prev) => !prev);
-  const handleCollapseToggle = () => setCollapsed((prev) => !prev);
-
-  // Breakpoints
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "lg"));
 
-  // عرض سایدبار بر اساس حالت و اندازه صفحه
-  const drawerWidth = isMobile ? 240 : collapsed ? 72 : 240;
+  const drawerWidth = collapsed ? 72 : 240;
+  const NAVBAR_HEIGHT = 64;
 
-  // margin-left محتوا بر اساس breakpoint و collapsed
-  // const contentMarginLeft = isMobile
-  //   ? 0
-  //   : isTablet
-  //   ? collapsed
-  //     ? 72
-  //     : 200 // فاصله مناسب تبلت
-  //   : collapsed
-  //   ? 72
-  //   : 240; // دسکتاپ
+  const [goals, setGoals] = useState(() => {
+    const saved = localStorage.getItem("goals");
+    return saved ? JSON.parse(saved) : initialGoals;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("goals", JSON.stringify(goals));
+  }, [goals]);
+
+  useEffect(() => {
+  setMobileOpen(false);
+}, [theme.direction]);
+
+  const handleMobileToggle = () => setMobileOpen((p) => !p);
+  const handleCollapseToggle = () => setCollapsed((p) => !p);
+
+  const anchor = theme.direction === "rtl" ? "right" : "left";
+
+  useEffect(() => {
+  document.body.dir = i18n.language === "fa" ? "rtl" : "ltr";
+}, [i18n.language]);
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <CssBaseline />
 
-      {/* Navbar */}
-      <Navbar
-        onMenuClick={handleMobileToggle} // موبایل
-        onCollapse={handleCollapseToggle} // تبلت و دسکتاپ
-        mode={mode}
-        onToggleMode={toggleMode}
-      />
+      {/* BACKGROUND FIX (Dark Mode) */}
+      <Box
+        sx={{
+          display: "flex",
+          minHeight: "100vh",
+          backgroundColor: theme.palette.background.default,
+        }}
+      >
 
-      <Box sx={{ display: "flex" }}>
-        {/* Sidebar */}
+        {/* NAVBAR */}
+        <Navbar
+          onMenuClick={handleMobileToggle}
+          onCollapse={handleCollapseToggle}
+          mode={mode}
+          // setMode={setMode}
+           onToggleMode={() => setMode(prev => prev === "light" ? "dark" : "light")}
+          collapsed={collapsed}
+        />
+
+        {/* 📱 MOBILE DRAWER */}
         <Drawer
-          variant={isMobile ? "temporary" : "permanent"}
-          open={isMobile ? mobileOpen : true}
-          onClose={handleMobileToggle}
-          ModalProps={{ keepMounted: true }}
-          sx={{
-            width: drawerWidth,
-            flexShrink: 0,
-            "& .MuiDrawer-paper": {
-              width: drawerWidth,
-              top: `${navbarHeight}px`,
-              height: `calc(100vh - ${navbarHeight}px)`,
-              overflowY: "auto",
-              overflowX: "hidden",
-              transition: "width 0.3s",
-            },
-          }}
-        >
-          <Sidebar collapsed={!isMobile && collapsed} />
+  key={theme.direction}
+  variant="temporary"
+  open={mobileOpen}
+  onClose={handleMobileToggle}
+  anchor={theme.direction === "rtl" ? "right" : "left"}
+  disablePortal 
+  ModalProps={{ keepMounted: false }}
+  sx={{
+    "& .MuiDrawer-paper": {
+      width: 240,
+      backgroundColor: theme.palette.background.paper,
+      direction: theme.direction, 
+    },
+  }}
+>
+          <Sidebar
+            collapsed={false}
+            goals={goals}
+            search={search}
+            setSearch={setSearch}
+            categoryFilter={categoryFilter}
+            setCategoryFilter={setCategoryFilter}
+          />
         </Drawer>
 
-        {/* Main Content */}
+        {/* DESKTOP SIDEBAR */}
+        {!isMobile && (
+          <Box
+            sx={{
+              width: drawerWidth,
+              flexShrink: 0,
+              borderInlineEnd: "1px solid",
+              borderColor: "divider",
+              height: `calc(100vh - ${NAVBAR_HEIGHT}px)`,
+              position: "relative",
+              top: `${NAVBAR_HEIGHT}px`,
+              backgroundColor: theme.palette.background.paper,
+            }}
+          >
+            <Sidebar
+              collapsed={collapsed}
+              goals={goals}
+              search={search}
+              setSearch={setSearch}
+              categoryFilter={categoryFilter}
+              setCategoryFilter={setCategoryFilter}
+            />
+          </Box>
+        )}
+
+        {/* CONTENT AREA FIX */}
         <Box
           component="main"
           sx={{
             flexGrow: 1,
             p: 3,
-            transition: "margin 0.3s",
-            ml: 0,
+            backgroundColor: theme.palette.background.default,
+            minHeight: "100vh",
           }}
         >
           <Toolbar />
+
           <Container maxWidth="lg">
-            <Outlet />
+            <Outlet
+              context={{
+                goals,
+                setGoals,
+                search,
+                categoryFilter,
+              }}
+            />
           </Container>
         </Box>
       </Box>
-    </ThemeProvider>
+    </>
   );
 }

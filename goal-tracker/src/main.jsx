@@ -1,32 +1,13 @@
-// import { StrictMode } from 'react'
-// import { createRoot } from 'react-dom/client'
-// import './index.css'
-// import App from './App.jsx'
-
-// createRoot(document.getElementById('root')).render(
-//   <StrictMode>
-//     <App />
-//   </StrictMode>,
-// )
-
-
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom';
-// import LanguageProvider from './context/LanguageContext';
-// import { getTheme } from "./theme/theme";
-// import RTLWrapper from "./theme/RTLWrapper";
-
-
+import "./i18n";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-
           <App />
-
-      
     </BrowserRouter>
   </StrictMode>
 );

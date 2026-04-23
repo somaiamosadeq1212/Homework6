@@ -3,8 +3,6 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, Button }
 
 export default function ConfirmDeleteDialog({ open, onCancel, onConfirm }) {
 
-
-
   return (
     <Dialog open={open} onClose={onCancel}>
       <DialogTitle>Confirm Delete</DialogTitle>

@@ -1,59 +1,43 @@
-// export const defaultGoals = [
-//     { id: 1, title: "Learn React", description: "Study hooks", progress: 40, completed: false, startDate: "2026-03-11", endDate: "2026-03-12" },
-//     { id: 2, title: "Build Goal Tracker", description: "Finish project", progress: 70, completed: false, startDate: "2026-03-10", endDate: "2026-03-15" },
-//     { id: 3, title: "Read a Book", description: "Read 30 pages", progress: 100, completed: true, startDate: "2026-03-09", endDate: "2026-03-11" },
-//     { id: 4, title: "create a project", description: "Create goal project", progress: 50, completed: false, startDate: "2026-03-09", endDate: "2026-03-11" },
-
-//   // ]
-
-
-// Goals (test data)
 export const initialGoals = [
   {
     id: 1,
     title: "Learn React",
     description: "Study hooks",
     progress: 40,
-    completed: false,
+    status: "in-progress",
     startDate: "2026-03-11",
     endDate: "2026-03-12",
+    activityDates: ["2026-04-21", "2026-04-20"]
   },
   {
     id: 2,
     title: "Build Goal Tracker",
     description: "Finish project",
     progress: 70,
-    completed: false,
+    status: "in-progress",
     startDate: "2026-03-10",
     endDate: "2026-03-15",
+    activityDates: ["2026-04-21", "2026-04-20"]
   },
   {
-    id: 4,
-    title: "Read a Book",
+    id: 3,
+    title: "Test Today",
     description: "Read 30 pages",
-    progress: 100,
-    completed: true,
-    startDate: "2026-03-09",
-    endDate: "2026-03-11",
+    progress: 10,
+    status: "paused",
+    startDate: "2026-04-04",
+    endDate: "2026-04-04",
+    activityDates: ["2026-04-21", "2026-04-20"]
   },
-
-  {
-  id: 3,
-  title: "Test Today",
-  description: "Read 30 pages",
-  progress: 10,
-  completed: false,
-  startDate: "2026-04-04",
-  endDate: "2026-04-04",
-}
 ];
 
 // Form default values
 export const initialFormData = {
-  title: "",
-  description: "",
+  title: { en: "", fa: "" },
+  description: { en: "", fa: "" },
   type: "Work",
   startDate: "",
   endDate: "",
   progress: 0,
+  status: "in-progress",
 };

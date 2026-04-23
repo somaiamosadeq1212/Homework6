@@ -1,177 +1,211 @@
+import React from "react";
+import {
+  Box,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+  TextField,
+  InputAdornment,
+  Tooltip,
+  IconButton,
+} from "@mui/material";
 
-// import Box from "@mui/material/Box";
-// import List from "@mui/material/List";
-// import ListItemButton from "@mui/material/ListItemButton";
-// import { Link } from "react-router-dom";
-// import ListItemIcon from "@mui/material/ListItemIcon";
-// import ListItemText from "@mui/material/ListItemText";
-// import Divider from "@mui/material/Divider";
-// import DashboardIcon from "@mui/icons-material/Dashboard";
-// import PeopleIcon from "@mui/icons-material/People";
-// import SettingsIcon from "@mui/icons-material/Settings";
-// // import { useState } from "react";
-// // import TextField from "@mui/material/TextField";
-// import { useSearch } from "../context/SearchContext";
-
-
-// import InputAdornment from "@mui/material/InputAdornment";
-// import SearchIcon from "@mui/icons-material/Search";
-
-// const items = [
-//   { label: "Dashboard", path: "/dashboard", icon: <DashboardIcon /> },
-//   { label: "Goals", path: "/goals", icon: <PeopleIcon /> },
-//   { label: "Categories", path: "/categories", icon: <SettingsIcon /> },
-//   { label: "Settings", path: "/settings", icon: <SettingsIcon /> },
-// ];
-
-// export default function Sidebar({ collapsed = false, goals = [] }) {
-//   const [search, setSearch] = useState("");
-
-//   const { search, setSearch } = useSearch();
-
-//   const filteredGoals = goals.filter((goal) =>
-//     goal.name.toLowerCase().includes(search.toLowerCase()) ||
-//     goal.category.toLowerCase().includes(search.toLowerCase())
-//   );
-
-//   return (
-//     <Box sx={{ width: collapsed ? 72 : 240, p: 2 }}>
-      
-//       {!collapsed && (
-//         <TextField
-//   fullWidth
-//   size="small"
-//   placeholder="Search goals..."
-//   value={search}
-//   onChange={(e) => setSearch(e.target.value)}
-//   sx={{ mb: 2 }}
-  
-// />
-//       )}
-
-//       <List>
-//         {items.map((item) => (
-//           <ListItemButton key={item.label} component={Link} to={item.path}>
-//             <ListItemIcon sx={{ minWidth: 0, justifyContent: "center" }}>
-//               {item.icon}
-//             </ListItemIcon>
-//             {!collapsed && <ListItemText primary={item.label} sx={{ ml: 2 }} />}
-//           </ListItemButton>
-//         ))}
-//       </List>
-
-//       <Divider sx={{ my: 2 }} />
-
-//       {!collapsed && search && (
-//         <List>
-//           {filteredGoals.map((goal) => (
-//             <ListItemButton key={goal.id}>
-//               <ListItemText primary={goal.name} secondary={goal.category} />
-//             </ListItemButton>
-//           ))}
-//         </List>
-//       )}
-//     </Box>
-//   );
-// }
-
-
-import Box from "@mui/material/Box";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Divider from "@mui/material/Divider";
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
-
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import PeopleIcon from "@mui/icons-material/People";
-import SettingsIcon from "@mui/icons-material/Settings";
+import { useNavigate } from "react-router-dom";
+import { useTheme } from "@mui/material/styles";
+import { useTranslation } from "react-i18next";
 import SearchIcon from "@mui/icons-material/Search";
+import ClearIcon from "@mui/icons-material/Clear";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import WorkIcon from "@mui/icons-material/Work";
+import PersonIcon from "@mui/icons-material/Person";
+import FlagIcon from "@mui/icons-material/Flag";
+import FolderIcon from "@mui/icons-material/Folder";
+import SettingsIcon from "@mui/icons-material/Settings";
 
-import { Link } from "react-router-dom";
-import { useSearch } from "../../context/SearchContext.jsx";
+const categoryIcons = {
+  Exercise: <FitnessCenterIcon />,
+  Study: <MenuBookIcon />,
+  Work: <WorkIcon />,
+  Personal: <PersonIcon />,
+  Other: <FlagIcon />,
+};
 
-const items = [
-  { label: "Dashboard", path: "/dashboard", icon: <DashboardIcon /> },
-  { label: "Goals", path: "/goals", icon: <PeopleIcon /> },
-  { label: "Categories", path: "/categories", icon: <SettingsIcon /> },
-  { label: "Settings", path: "/settings", icon: <SettingsIcon /> },
-];
+const ALL_CATEGORIES = ["Exercise", "Study", "Work", "Personal", "Other"];
 
-export default function Sidebar({ collapsed = false, goals = [] }) {
-  // گرفتن state سرچ از Context
-  const { search, setSearch } = useSearch();
+export default function Sidebar({
+  collapsed = false,
+  goals = [],
+  search,
+  setSearch,
+  categoryFilter,
+  setCategoryFilter,
+}) {
+  const navigate = useNavigate();
+  const theme = useTheme();
+  const { t } = useTranslation();
 
-  // امن سازی فیلتر کردن برای goal های ناقص
-  const filteredGoals = (goals || []).filter((goal) =>
-  (goal?.title || "").toLowerCase().includes(search.toLowerCase()) ||
-  (goal?.type || "").toLowerCase().includes(search.toLowerCase())
-);
+  const totalGoals = goals.length;
+
+  const categoryCount = ALL_CATEGORIES.map((cat) => {
+    const count = goals.filter((g) => g.type === cat).length;
+    return { name: cat, count };
+  });
+
+  const archivedGoals = goals.filter((g) => g.status === "completed");
+
+  const getItemStyle = (active) => ({
+    borderRadius: 2,
+    justifyContent: collapsed ? "center" : "flex-start",
+    position: "relative",
+    backgroundColor: active ? "#2f435f" : "transparent",
+    color: active ? "#fff" : "inherit",
+    transition: "all 0.25s ease",
+
+    "&:hover": {
+      backgroundColor: "#486288",
+    },
+
+    "&::before": active
+      ? {
+        content: '""',
+        position: "absolute",
+        insetInlineStart: 0,
+        top: 6,
+        bottom: 6,
+        width: 4,
+        borderRadius: 2,
+        backgroundColor: "#e5e9ed",
+      }
+      : {},
+  });
 
   return (
-    <Box
-      sx={{
-        width: collapsed ? 72 : 240,
-        minHeight: "100vh",
-        p: 2,
-        borderRight: "1px solid",
-        borderColor: "divider",
-        transition: "width 0.3s",
-      }}
-    >
-      {/* Search Box */}
+    <Box sx={{ p: 2, borderInlineEnd: "1px solid", borderColor: "divider" }}>
+
+      {/* SEARCH */}
       {!collapsed && (
         <TextField
           fullWidth
           size="small"
-          placeholder="Search goals..."
+          placeholder={t("sidebar.searchPlaceholder")}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          sx={{ mb: 2 }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
                 <SearchIcon />
               </InputAdornment>
             ),
+            endAdornment: search && (
+              <InputAdornment position="end">
+                <IconButton size="small" onClick={() => setSearch("")}>
+                  <ClearIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
           }}
         />
       )}
 
-      {/* Main Menu */}
-      <List>
-        {items.map((item) => (
+      <List sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
+
+        {/* ALL GOALS */}
+        <Tooltip title={t("sidebar.allGoals")} placement="right">
           <ListItemButton
-            key={item.label}
-            component={Link}
-            to={item.path}
-            sx={{ px: collapsed ? 1.5 : 2 }}
+            sx={getItemStyle(categoryFilter === "All")}
+            onClick={() => {
+              setCategoryFilter("All");
+              navigate("/dashboard");
+            }}
           >
-            <ListItemIcon sx={{ minWidth: 0, justifyContent: "center" }}>
-              {item.icon}
+            <ListItemIcon sx={{ minWidth: 0 }}>
+              <FlagIcon />
             </ListItemIcon>
-            {!collapsed && <ListItemText primary={item.label} sx={{ ml: 2 }} />}
+
+            {!collapsed && (
+              <ListItemText primary={t("sidebar.allGoals")} sx={{ mx: 2 }} />
+            )}
+
+            {!collapsed && (
+              <Box sx={{ marginInlineStart: "auto", bgcolor: "#1976d2", color: "#fff", px: 1.2, borderRadius: 2 }}>
+                {totalGoals}
+              </Box>
+            )}
           </ListItemButton>
-        ))}
-      </List>
+        </Tooltip>
 
-      <Divider sx={{ my: 2 }} />
+        {/* CATEGORIES */}
+        {categoryCount.map((cat) => (
+          <Tooltip key={cat.name} title={t(`sidebar.categories.${cat.name}`)}>
+            <ListItemButton
+              sx={getItemStyle(categoryFilter === cat.name)}
+              onClick={() => {
+                setCategoryFilter(cat.name);
+                navigate("/dashboard");
+              }}
+            >
+              <ListItemIcon sx={{ minWidth: 0 }}>
+                {categoryIcons[cat.name]}
+              </ListItemIcon>
 
-      {/* Filtered Goals */}
-      {!collapsed && search && filteredGoals.length > 0 && (
-        <List>
-          {filteredGoals.map((goal) => (
-            <ListItemButton key={goal.id}>
-              <ListItemText
-                primary={goal?.title || "Unnamed Goal"}
-                secondary={goal?.type || "No Category"}
-              />
+              {!collapsed && (
+                <ListItemText
+                  primary={t(`sidebar.categories.${cat.name}`)}
+                  sx={{ mx: 2 }}
+                />
+              )}
+
+              {!collapsed && (
+                <Box sx={{ marginInlineStart: "auto", bgcolor: "grey.700", color: "#fff", px: 1.2, borderRadius: 2 }}>
+                  {cat.count}
+                </Box>
+              )}
             </ListItemButton>
-          ))}
-        </List>
-      )}
+          </Tooltip>
+        ))}
+
+        <Divider sx={{ my: 2 }} />
+
+        {/* ARCHIVED */}
+        <ListItemButton
+          sx={getItemStyle(categoryFilter === "Archived")}
+          onClick={() => {
+            setCategoryFilter("Archived");
+            navigate("/dashboard");
+          }}
+        >
+          <ListItemIcon sx={{ minWidth: 0 }}>
+            <FolderIcon />
+          </ListItemIcon>
+
+          {!collapsed && (
+            <ListItemText primary={t("sidebar.archivedGoals")} sx={{ mx: 2 }} />
+          )}
+
+          {!collapsed && (
+            <Box sx={{ marginInlineStart: "auto", bgcolor: "grey.700", color: "#fff", px: 1.2, borderRadius: 2 }}>
+              {archivedGoals.length}
+            </Box>
+          )}
+        </ListItemButton>
+
+        <Divider sx={{ my: 2 }} />
+
+        {/* SETTINGS */}
+        <ListItemButton onClick={() => navigate("/settings")}>
+          <ListItemIcon sx={{ minWidth: 0 }}>
+            <SettingsIcon />
+          </ListItemIcon>
+
+          {!collapsed && (
+            <ListItemText primary={t("sidebar.settings")} sx={{ mx: 2 }} />
+          )}
+        </ListItemButton>
+
+      </List>
     </Box>
   );
 }

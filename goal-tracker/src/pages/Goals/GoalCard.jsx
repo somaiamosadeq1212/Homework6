@@ -1,56 +1,3 @@
-// import React from "react";
-// import { Card, CardContent, Typography, LinearProgress, IconButton, Chip, Tooltip, Box } from "@mui/material";
-// import EditIcon from "@mui/icons-material/Edit";
-// import DeleteIcon from "@mui/icons-material/Delete";
-// import { useNavigate } from "react-router-dom";
-
-// const typeColors = { Work: "primary", Personal: "success", Exercise: "error" };
-
-
-
-// export default function GoalCard({ goal, onEdit, onDelete }) {
-
-// const navigate = useNavigate();
-
-// <Card
-//   onClick={() => navigate(`/goals/${goal.id}`)}
-//   sx={{
-//     cursor: "pointer", // تغییر نشانگر موس
-//     minWidth: 275,
-//     boxShadow: 3,
-//     borderRadius: 2,
-//     padding: 2,
-//     backgroundColor: "#fff",
-//     transition: "0.3s",
-//     "&:hover": { transform: "scale(1.02)" },
-//   }}
-// >
-//   ...
-// </Card>
-
-//   return (
-//     <Card sx={{ minWidth: 275, boxShadow: 3, borderRadius: 2, padding: 2, backgroundColor: "#fff", transition: "0.3s", "&:hover": { transform: "scale(1.02)" } }}>
-//       <CardContent>
-//         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-//           <Typography variant="h6">{goal.title}</Typography>
-//           <Box>
-//             <IconButton onClick={() => onEdit(goal)} title="Edit"><EditIcon /></IconButton>
-//             <IconButton onClick={() => onDelete(goal)} title="Delete"><DeleteIcon /></IconButton>
-//           </Box>
-//         </Box>
-//         <Chip label={goal.type} color={typeColors[goal.type]} sx={{ mt: 1, mb: 2 }} />
-//         <Typography sx={{ mb: 1 }}>{goal.description}</Typography>
-//         <Tooltip title={`Progress: ${goal.progress}%`}>
-//           <LinearProgress variant="determinate" value={goal.progress} sx={{ height: 10, borderRadius: 5, mb: 1 }} />
-//         </Tooltip>
-//         <Typography variant="caption" display="block">{goal.startDate} - {goal.endDate}</Typography>
-//         <Typography variant="caption" display="block" color={goal.status === "completed" ? "green" : "text.secondary"}>
-//           Status: {goal.status}
-//         </Typography>
-//       </CardContent>
-//     </Card>
-//   );
-// }
 import React from "react";
 import {
   Card,
@@ -63,156 +10,221 @@ import {
   Box,
   Checkbox,
   FormControlLabel,
+  Button,
+  useTheme,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import StopIcon from "@mui/icons-material/Stop";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
-const typeColors = { Work: "primary", Personal: "success", Exercise: "error" };
+const typeColors = {
+  Work: "primary",
+  Personal: "success",
+  Exercise: "error",
+};
 
-export default function GoalCard({ goal, onEdit, onDelete, onToggleComplete }) {
+export default function GoalCard({
+  goal,
+  onEdit,
+  onDelete,
+  onToggleComplete,
+  onToggleStatus,
+}) {
   const navigate = useNavigate();
+  const theme = useTheme();
+  const { t } = useTranslation();
+
+  const status = goal.status || "in-progress";
+  const isCompleted = status === "completed";
+  const isPaused = status === "paused";
+
+  const { i18n } = useTranslation();
+
+  const title =
+    typeof goal.title === "string"
+      ? goal.title
+      : goal.title?.[i18n.language] || goal.title?.en;
+
+  const description =
+    typeof goal.description === "string"
+      ? goal.description
+      : goal.description?.[i18n.language] || goal.description?.en;
 
   return (
     <Card
       onClick={() => navigate(`/goals/${goal.id}`)}
       sx={{
-        minWidth: 280,
-        maxWidth: 320,
+        minWidth: 310,
+        maxWidth: 410,
+        width: "100%",
         boxShadow: 3,
         borderRadius: 2,
-        padding: 2,
-        backgroundColor: "#fff",
+        p: 1,
         cursor: "pointer",
-        transition: "0.3s",
-        "&:hover": { transform: "scale(1.03)" },
+        transition: "all 0.25s ease",
+        bgcolor: "background.paper",
+
+        "&:hover": {
+          transform: "translateY(-4px) scale(1.01)",
+          boxShadow: 6,
+        },
       }}
     >
-      <CardContent>
+      <CardContent sx={{ p: 2 }}>
+
         {/* Header */}
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <FormControlLabel
+            sx={{ flex: 1 }}
             control={
               <Checkbox
-                checked={goal.completed}
-                onClick={(e) => e.stopPropagation()} // جلوگیری از navigate هنگام تیک زدن
+                checked={isCompleted}
+                onClick={(e) => e.stopPropagation()}
                 onChange={() => onToggleComplete(goal)}
               />
             }
-            label={<Typography variant="h6">{goal.title}</Typography>}
+            label={
+              <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                {title}
+              </Typography>
+            }
           />
 
+          {/* Actions */}
           <Box>
             <IconButton
-              onClick={(e) => { e.stopPropagation(); onEdit(goal); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onEdit(goal);
+              }}
               size="small"
             >
-              <EditIcon />
+              <EditIcon fontSize="small" />
             </IconButton>
+
             <IconButton
-              onClick={(e) => { e.stopPropagation(); onDelete(goal.id); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete(goal.id);
+              }}
               size="small"
               color="error"
             >
-              <DeleteIcon />
+              <DeleteIcon fontSize="small" />
             </IconButton>
           </Box>
         </Box>
 
-        {/* Type Chip */}
-        <Chip label={goal.type} color={typeColors[goal.type]} sx={{ mt: 1, mb: 2 }} />
+        {/* Type */}
+        <Chip
+          label={t(`sidebar.categories.${goal.type}`)}
+          color={typeColors[goal.type] || "default"}
+          size="small"
+          sx={{ mt: 1.5, mb: 2 }}
+        />
 
         {/* Description */}
-        <Typography sx={{ mb: 1 }}>{goal.description}</Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+          {description || t("goal.noDescription")}
+        </Typography>
 
         {/* Dates */}
-        <Typography variant="caption" display="block">
-          {goal.startDate} - {goal.endDate}
+        <Typography variant="caption" color="text.secondary">
+          📅 {goal.startDate} - {goal.endDate}
         </Typography>
 
         {/* Progress */}
-        <Tooltip title={`Progress: ${goal.progress}%`}>
+        <Tooltip title={`${t("goal.progress")}: ${goal.progress || 0}%`}>
           <LinearProgress
             variant="determinate"
-            value={goal.progress}
-            sx={{ height: 10, borderRadius: 5, mt: 1 }}
+            value={goal.progress || 0}
+            sx={{ height: 8, borderRadius: 5, mb: 0.5 }}
           />
         </Tooltip>
-        <Typography variant="caption" display="block">
-          {goal.progress}% Completed
+
+        <Typography variant="caption" color="text.secondary">
+          {goal.progress || 0}% {t("goal.completed")}
         </Typography>
 
         {/* Status */}
         <Typography
           variant="caption"
-          display="block"
-          color={goal.completed ? "green" : "text.secondary"}
+          sx={{
+            display: "block",
+            mt: 1,
+            fontWeight: 500,
+            color: isCompleted
+              ? theme.palette.success.main
+              : theme.palette.text.secondary,
+          }}
         >
-          Status: {goal.completed ? "Completed" : "In Progress"}
+          {isCompleted
+            ? `✅ ${t("goal.completed")}`
+            : `⏳ ${t("goal.inProgress")}`}
         </Typography>
+
+        {/* NEW ACTION BUTTONS */}
+        <Box sx={{ display: "flex", gap: 1, mt: 2 }}>
+
+          {/* {!isCompleted && (
+            <Button
+              size="small"
+              variant="contained"
+              color={isPaused ? "success" : "warning"}
+              startIcon={isPaused ? <PlayArrowIcon /> : <StopIcon />}
+              onClick={(e) => {
+                e.stopPropagation();
+
+                const updatedStatus = isPaused ? "in-progress" : "paused";
+
+                onToggleComplete({
+                  ...goal,
+                  status: updatedStatus,
+                });
+              }}
+            >
+              {isPaused
+                ? t("goal.resume")
+                : t("goal.stop")}
+            </Button>
+          )}  */}
+
+
+          {!isCompleted && (
+            <Button
+              size="small"
+              variant="contained"
+              color={isPaused ? "success" : "warning"}
+              startIcon={isPaused ? <PlayArrowIcon /> : <StopIcon />}
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleStatus(goal); // 👈 فقط این
+              }}
+            >
+              {isPaused ? t("goal.resume") : t("goal.stop")}
+            </Button>
+          )}
+
+          {/* {!isCompleted && (
+  <Button
+    size="small"
+    variant="contained"
+    color={isPaused ? "success" : "warning"}
+    onClick={(e) => {
+      e.stopPropagation();
+      onToggleStatus(goal);
+    }}
+    startIcon={isPaused ? <PlayArrowIcon /> : <StopIcon />}
+  >
+    {isPaused ? t("goal.resume") : t("goal.stop")}
+  </Button>
+)} */}
+        </Box>
+
       </CardContent>
     </Card>
   );
 }
-
-// import React from "react";
-// import { Card, CardContent, Typography, LinearProgress, IconButton, Chip, Tooltip, Box } from "@mui/material";
-// import EditIcon from "@mui/icons-material/Edit";
-// import DeleteIcon from "@mui/icons-material/Delete";
-// import { useNavigate } from "react-router-dom";
-
-// const typeColors = { Work: "primary", Personal: "success", Exercise: "error" };
-
-// export default function GoalCard({ goal, onEdit, onDelete }) {
-//   const navigate = useNavigate();
-
-//   return (
-//     <Card
-//       onClick={() => navigate(`/goals/${goal.id}`)}
-//       sx={{
-//         cursor: "pointer", // تغییر نشانگر موس
-//         minWidth: 275,
-//         boxShadow: 3,
-//         borderRadius: 2,
-//         padding: 2,
-//         backgroundColor: "#fff",
-//         transition: "0.3s",
-//         "&:hover": { transform: "scale(1.02)" },
-//       }}
-//     >
-//       <CardContent>
-//         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-//           <Typography variant="h6">{goal.title}</Typography>
-//           <Box>
-//             <IconButton
-//               onClick={(e) => { e.stopPropagation(); onEdit(goal); }}
-//               title="Edit"
-//             >
-//               <EditIcon />
-//             </IconButton>
-//             <IconButton
-//               onClick={(e) => { e.stopPropagation(); onDelete(goal); }}
-//               title="Delete"
-//             >
-//               <DeleteIcon />
-//             </IconButton>
-//           </Box>
-//         </Box>
-
-//         <Chip label={goal.type} color={typeColors[goal.type]} sx={{ mt: 1, mb: 2 }} />
-//         <Typography sx={{ mb: 1 }}>{goal.description}</Typography>
-//         <Tooltip title={`Progress: ${goal.progress}%`}>
-//           <LinearProgress variant="determinate" value={goal.progress} sx={{ height: 10, borderRadius: 5, mb: 1 }} />
-//         </Tooltip>
-//         <Typography variant="caption" display="block">{goal.startDate} - {goal.endDate}</Typography>
-//         <Typography
-//           variant="caption"
-//           display="block"
-//           color={goal.status === "completed" ? "green" : "text.secondary"}
-//         >
-//           Status: {goal.status}
-//         </Typography>
-//       </CardContent>
-//     </Card>
-//   );
-// }

@@ -1,5 +1,3 @@
-
-
 import {
   Box,
   Card,
@@ -9,28 +7,28 @@ import {
   LinearProgress,
   styled,
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
-
-const XPLinearProgress = styled(LinearProgress)(({theme}) => ({
-  height: 14, // ارتفاع بیشتر
+const XPLinearProgress = styled(LinearProgress)(({ theme }) => ({
+  height: 14,
   borderRadius: 10,
-  backgroundColor: "#e0e0e0", // رنگ پس‌زمینه
+  backgroundColor: "#e0e0e0",
   "& .MuiLinearProgress-bar": {
     borderRadius: 10,
-    background: "linear-gradient(90deg, #6a11cb 0%, #2575fc 100%)", // گرادینت حرفه‌ای
-    transition: "width 1s ease-in-out", // انیمیشن نرم
+    background: "linear-gradient(90deg, #6a11cb 0%, #2575fc 100%)",
+    transition: "width 1s ease-in-out",
   },
 }));
 
 const CompletionProgress = styled(LinearProgress)(({ value }) => {
-  let barColor = "#a5d6a7"; // پیش‌فرض سبز روشن
+  let barColor = "#a5d6a7";
 
   if (value <= 50) {
-    barColor = "#a5d6a7"; // سبز روشن
+    barColor = "#a5d6a7";
   } else if (value <= 75) {
-    barColor = "#66bb6a"; // سبز متوسط
+    barColor = "#66bb6a";
   } else {
-    barColor = "#388e3c"; // سبز تیره
+    barColor = "#388e3c";
   }
 
   return {
@@ -44,7 +42,6 @@ const CompletionProgress = styled(LinearProgress)(({ value }) => {
     },
   };
 });
-
 
 const AddGoalButton = styled(Button)(() => ({
   background: "linear-gradient(90deg, #6a11cb 0%, #2575fc 100%)",
@@ -61,9 +58,9 @@ const AddGoalButton = styled(Button)(() => ({
     transform: "translateY(-2px)",
   },
   "&:active": {
-          transform: "translateY(1px)",
-          boxShadow: "0px 3px 8px rgba(0,0,0,0.2)",
-        },
+    transform: "translateY(1px)",
+    boxShadow: "0px 3px 8px rgba(0,0,0,0.2)",
+  },
 }));
 
 export default function SummarySection({
@@ -73,39 +70,36 @@ export default function SummarySection({
   xp,
   streak,
 }) {
-  
+
   const maxXP = 500;
   const progress = (xp / maxXP) * 100;
 
   const completionRate =
     totalGoals === 0 ? 0 : Math.round((completedGoals / totalGoals) * 100);
 
+  const { t } = useTranslation();
+
   return (
     <Box sx={{ mb: 4 }}>
-      
-      {/* 👋 Welcome */}
-      <Typography variant="h6" sx={{ mb: 2 }}>
-        👋 Welcome back
-      </Typography>
 
-      {/* 📊 Cards */}
+      {/* Cards */}
       <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
-        
+
         {/* Completion */}
         <Card sx={{ flex: 1, minWidth: 200 }}>
           <CardContent>
-            <Typography color="text.secondary">Completion</Typography>
+            <Typography color="text.secondary">{t("summary.completion")}</Typography>
             <Typography variant="h5">{completionRate}%</Typography>
             <Box sx={{ mt: 1 }}>
-      <CompletionProgress variant="determinate" value={completionRate} />
-    </Box>
+              <CompletionProgress variant="determinate" value={completionRate} />
+            </Box>
           </CardContent>
         </Card>
 
         {/* Streak */}
         <Card sx={{ flex: 1, minWidth: 200 }}>
           <CardContent>
-            <Typography color="text.secondary">🔥 Streak</Typography>
+            <Typography color="text.secondary">🔥 {t("summary.streak")}</Typography>
             <Typography variant="h5">{streak} days</Typography>
           </CardContent>
         </Card>
@@ -113,7 +107,7 @@ export default function SummarySection({
         {/* XP */}
         <Card sx={{ flex: 1, minWidth: 200 }}>
           <CardContent>
-            <Typography color="text.secondary">⭐ XP</Typography>
+            <Typography color="text.secondary">⭐ {t("summary.xp")}</Typography>
             <Typography variant="h5">{xp}</Typography>
 
             {/* XP Bar */}
@@ -133,8 +127,8 @@ export default function SummarySection({
         <Card sx={{ flex: 1, minWidth: 200, display: "flex", alignItems: "center", justifyContent: "center", minHeight: 120 }}>
           <CardContent sx={{ width: "100%", textAlign: "center" }}>
             <AddGoalButton fullWidth onClick={onAddGoal}>
-      + New Goal
-    </AddGoalButton>
+              + {t("summary.newGoal")}
+            </AddGoalButton>
           </CardContent>
         </Card>
       </Box>
