@@ -66,15 +66,36 @@ Theme is globally applied using Material UI.
 
 ## 📂 Project Structure
 
-src/
-├── components/
-├── pages/
-│ ├── Goals/
-│ ├── Settings/
-├── layout/
-├── data/
-├── utils/
-├── i18n/
+- src/
+- ├── components/
+- │ ├── layout/
+- │   ├── layout/
+- │   ├── Navbar/
+- │   ├── Sidebar/
+- │   ├── SummeryCarts/
+- ├── context/
+- │ ├── SearchContext/
+- ├── data/
+- │ ├── FormData/
+- ├── pages/
+- │ ├── Goals/
+- │   ├── GoalCard/
+- │   ├── GoalForm/
+- │   ├── Goals/
+- │ ├── ConfirmDeleteDialog/
+- │ ├── Dashboard/
+- │ ├── GoalDetails/
+- │ ├── NotFound/
+- │ ├── Settings/
+- ├── router/
+- │ ├── AppRouter/
+- ├── theme/
+- │ ├── rtl/
+- │ ├── theme/
+- ├── utils/
+- │ ├── StreakCalcurator/
+- │ ├── xpCalculator/
+- ├── i18n/
 
 ---
 
@@ -100,8 +121,9 @@ All goals and settings are saved in **localStorage**, so data remains after refr
 ```bash
 npm install
 npm run dev
+http://localhost:5174/
 
-👨‍💻 Author
+ 👨‍💻 Author
 
-Developed by [ُSomaya Mosadiq]
+Developed by Somaya Mosadiq
 React Learning Project 🚀
