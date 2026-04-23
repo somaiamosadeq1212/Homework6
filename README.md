@@ -96,6 +96,8 @@ Theme is globally applied using Material UI.
 
 ## 📂 Project Structure
 
+```bash
+
 - src/
 - ├── components/
 - │ ├── layout/
@@ -126,10 +128,12 @@ Theme is globally applied using Material UI.
 - │ ├── StreakCalcurator/
 - │ ├── xpCalculator/
 - ├── i18n/
+- images/
+```
 
 ---
 
-## ⚙️ Settings Page
+## Settings Page
 
 The Settings page includes:
 
@@ -140,20 +144,44 @@ All changes apply instantly across the app.
 
 ---
 
-## 💾 Data Persistence
+## Data Persistence
 
 All goals and settings are saved in **localStorage**, so data remains after refresh.
 
 ---
 
-## ▶️ How to Run
+## GitHub Repository
+
+https://github.com/somaiamosadeq1212/product-catalog
+
+---
+
+## Installation & Running
+
+### Navigate into the project folder:
+
+``` bash
+cd product-catalog
+```
+
+### Install dependencies:
 
 ```bash
 npm install
+```
+
+### Start the development server:
+
+```bash
 npm run dev
-http://localhost:5174/
+```
 
- 👨‍💻 Author
+### Open the app in your browser:
 
-Developed by Somaya Mosadiq
-React Learning Project 🚀
+```bash
+http://localhost:5173
+```
+
+## Author
+- Somaya Mosadiq
+- React Developer
