@@ -1,25 +1,25 @@
-# 🎯 Goal Tracker App
+# Goal Tracker App
 
 A modern and responsive **Goal Tracking Web Application** built with React and Material UI.  
 This project helps users manage, track, and organize their personal goals efficiently with support for dark/light mode and multi-language (English & Persian).
 
 ---
 
-## 🚀 Features
+## Features
 
-- ➕ Create, edit, and delete goals
-- 📊 Track progress of each goal
-- 🏷️ Filter goals by category
-- 🔍 Search functionality in sidebar
-- 🌗 Dark / Light mode support
-- 🌍 Multi-language support (EN / FA)
-- ⚙️ Settings page for customization
-- 💾 Persistent data using LocalStorage
-- 📱 Fully responsive UI (Mobile + Desktop)
+- Create, edit, and delete goals
+- Track progress of each goal
+- Filter goals by category
+- Search functionality in sidebar
+- Dark / Light mode support
+- Multi-language support (EN / FA)
+- Settings page for customization
+- Persistent data using LocalStorage
+- Fully responsive UI (Mobile + Desktop)
 
 ---
 
-## 🧩 Tech Stack
+## Tech Stack
 
 - React.js
 - React Router
@@ -29,50 +29,50 @@ This project helps users manage, track, and organize their personal goals effici
 
 ---
 
-## 🖼️ Screenshots
+## Screenshots
 
-### 🏠 Dashboard
+### Dashboard
 ![Dashboard](./images/dashboard.PNG)
 
-### ⚙️ Add Goal Page
-![Settings](./images/add.PNG)
+### Add Goal Page
+![Add](./images/add.PNG)
 
-### ⚙️ Edit Goal
-![Settings](./images/edit.PNG)
+### Edit Goal
+![Edit](./images/edit.PNG)
 
-### ⚙️ Delete Goal
-![Settings](./images/delete.PNG)
+### Delete Goal
+![Delete](./images/delete.PNG)
 
-### ⚙️ Detailse
-![Settings](./images/details.PNG)
+### Detailse
+![Detailse](./images/details.PNG)
 
-### ⚙️ Filter by categoriy
-![Settings](./images/filter.PNG)
+### Filter by categoriy
+![Filter](./images/filter.PNG)
 
-### ⚙️ Not ound Page
-![Settings](./images/notfound.PNG)
+### Not ound Page
+![Notfound](./images/notfound.PNG)
 
-### ⚙️ Search by title/name 
-![Settings](./images/search.PNG)
+### Search by title/name 
+![Search](./images/search.PNG)
 
-### ⚙️ Archived Goals
-![Settings](./images/archived.PNG)
+### Archived Goals
+![Archived](./images/archived.PNG)
 
-### ⚙️ Settings Page
+### Settings Page
 ![Settings](./images/settings.PNG)
 
-### ⚙️ collapsed sidbar in desktop
-![Settings](./images/collaps-sidbar.PNG)
+### collapsed sidbar in desktop
+![Collapsed](./images/collaps-sidbar.PNG)
 
-### ⚙️ collapsed driver in mobile
-![Settings](./images/collaps.PNG)
+### collapsed driver in mobile
+![Collapsed](./images/collaps.PNG)
 
-### 📱 Responsive ui
-![Settings](./images/responsive.PNG)
+### Responsive ui
+![Responsive](./images/responsive.PNG)
 
 ---
 
-## 🌍 Language Support
+##  Language Support
 
 The app supports two languages:
 - English 🇬🇧
@@ -84,17 +84,17 @@ Users can switch language from:
 
 ---
 
-## 🌗 Theme Support
+## Theme Support
 
 Users can toggle between:
-- Light Mode ☀️
-- Dark Mode 🌙
+- Light Mode 
+- Dark Mode 
 
 Theme is globally applied using Material UI.
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```bash
 
@@ -152,7 +152,7 @@ All goals and settings are saved in **localStorage**, so data remains after refr
 
 ## GitHub Repository
 
-https://github.com/somaiamosadeq1212/product-catalog
+https://github.com/somaiamosadeq1212/goal-tracker-project
 
 ---
 
