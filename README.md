@@ -32,7 +32,7 @@ This project helps users manage, track, and organize their personal goals effici
 ## 🖼️ Screenshots
 
 ### 🏠 Dashboard
-![Dashboard](./images/dashboard.png)
+![Dashboard](./images/dashboard.PNG)
 
 ### ⚙️ Settings Page
 ![Settings](./images/settings.png)
