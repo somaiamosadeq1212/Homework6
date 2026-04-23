@@ -35,10 +35,40 @@ This project helps users manage, track, and organize their personal goals effici
 ![Dashboard](./images/dashboard.PNG)
 
 ### ⚙️ Settings Page
-![Settings](./images/settings.png)
+![Settings](./images/add.PNG)
+
+### ⚙️ Settings Page
+![Settings](./images/edit.PNG)
+
+### ⚙️ Settings Page
+![Settings](./images/delete.PNG)
+
+### ⚙️ Settings Page
+![Settings](./images/details.PNG)
+
+### ⚙️ Settings Page
+![Settings](./images/filter.PNG)
+
+### ⚙️ Settings Page
+![Settings](./images/notfound.PNG)
+
+### ⚙️ Settings Page
+![Settings](./images/search.PNG)
+
+### ⚙️ Settings Page
+![Settings](./images/archived.PNG)
+
+### ⚙️ Settings Page
+![Settings](./images/settings.PNG)
+
+### ⚙️ Settings Page
+![Settings](./images/collaps-sidebar.PNG)
+
+### ⚙️ Settings Page
+![Settings](./images/collapse.PNG)
 
 ### 📱 Mobile View
-![Mobile](./images/mobile.png)
+![Mobile](./responsive.PNG)
 
 ---
 
