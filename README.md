@@ -34,41 +34,41 @@ This project helps users manage, track, and organize their personal goals effici
 ### 🏠 Dashboard
 ![Dashboard](./images/dashboard.PNG)
 
-### ⚙️ Settings Page
+### ⚙️ Add Goal Page
 ![Settings](./images/add.PNG)
 
-### ⚙️ Settings Page
+### ⚙️ Edit Goal
 ![Settings](./images/edit.PNG)
 
-### ⚙️ Settings Page
+### ⚙️ Delete Goal
 ![Settings](./images/delete.PNG)
 
-### ⚙️ Settings Page
+### ⚙️ Detailse
 ![Settings](./images/details.PNG)
 
-### ⚙️ Settings Page
+### ⚙️ Filter by categoriy
 ![Settings](./images/filter.PNG)
 
-### ⚙️ Settings Page
+### ⚙️ Not ound Page
 ![Settings](./images/notfound.PNG)
 
-### ⚙️ Settings Page
+### ⚙️ Search by title/name 
 ![Settings](./images/search.PNG)
 
-### ⚙️ Settings Page
+### ⚙️ Archived Goals
 ![Settings](./images/archived.PNG)
 
 ### ⚙️ Settings Page
 ![Settings](./images/settings.PNG)
 
-### ⚙️ Settings Page
-![Settings](./images/collaps-sidebar.PNG)
+### ⚙️ collapsed sidbar in desktop
+![Settings](./images/collaps-sidbar.PNG)
 
-### ⚙️ Settings Page
-![Settings](./images/collapse.PNG)
+### ⚙️ collapsed driver in mobile
+![Settings](./images/collaps.PNG)
 
-### 📱 Mobile View
-![Mobile](./responsive.PNG)
+### 📱 Responsive ui
+![Settings](./images/responsive.PNG)
 
 ---
 
